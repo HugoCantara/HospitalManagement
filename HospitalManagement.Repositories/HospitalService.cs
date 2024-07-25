@@ -1,4 +1,4 @@
-﻿/// <summary>Hospital Service Class</summary>
+﻿/// <summary>Hospital Management - Version 1.0</summary>
 namespace HospitalManagement.Repositories
 {
     using HospitalManagement.Models;
@@ -6,77 +6,93 @@ namespace HospitalManagement.Repositories
     using HospitalManagement.Services;
     using HospitalManagement.ViewModels;
 
-    public class HospitalService : IHospital
+    /// <summary>Hospital Service Class</summary>
+    public class HospitalService : IHospitalService
     {
+        /// <summary>Unit Of Work</summary>
         private IUnitOfWork _unitOfWork;
 
+        /// <summary>Constructor</summary>
+        /// <param name="unitOfWork">Unit Of Work</param>
         public HospitalService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
+        /// <summary>Get All Hospitals</summary>
+        /// <param name="pageNumber">Page Number</param>
+        /// <param name="pageSize">Page Size</param>
+        /// <returns>PagedResult<HospitalViewModel></returns>
         public PagedResult<HospitalViewModel> GetAll(int pageNumber, int pageSize)
         {
-            var vm = new HospitalViewModel();
-            int totalCount;
-            List<HospitalViewModel> vmList = new List<HospitalViewModel>();
+            var hospitalViewModelCollection = new List<HospitalViewModel>();
+            int totalRecords;
+            
             try 
             {
-                int excludeRecords = (pageSize * pageNumber) - pageSize;
-                var modelList = _unitOfWork.GenericRepository<Hospital>().GetAll().Skip(excludeRecords).Take(pageSize).ToList();
-                totalCount = _unitOfWork.GenericRepository<Hospital>().GetAll().ToList().Count;
-                vmList = ConvertModelToViewModelList(modelList);
+                int records = (pageSize * pageNumber) - pageSize;
+                var modelCollection = _unitOfWork.GenericRepository<Hospital>().GetAll().Skip(records).Take(pageSize).ToList();
+                totalRecords = _unitOfWork.GenericRepository<Hospital>().GetAll().ToList().Count;
+                hospitalViewModelCollection = GetHospitalViewModelCollection(modelCollection);
             }
             catch (Exception) 
             {
                 throw;
             }
-            var result = new PagedResult<HospitalViewModel> 
+
+            return new PagedResult<HospitalViewModel>
             {
-                Data = vmList,
-                TotalItems = totalCount,
+                Data = hospitalViewModelCollection,
+                TotalItems = totalRecords,
                 PageNumber = pageNumber,
                 PageSize = pageSize
             };
-            return result;
         }
 
+        /// <summary>Get Hospital by Identifier</summary>
+        /// <param name="id">Identifier</param>
+        /// <returns>HospitalViewModel</returns>
         public HospitalViewModel GetHospitalById(int id)
         {
-            var model = _unitOfWork.GenericRepository<Hospital>().GetById(id);
-            var vm = new HospitalViewModel(model);
-            return vm;
+            return new HospitalViewModel(_unitOfWork.GenericRepository<Hospital>().GetById(id));
         }
 
-        public void InsertHospital(HospitalViewModel hospital)
+        /// <summary>Insert Hospital</summary>
+        /// <param name="viewModel">Hospital View Model</param>
+        public void InsertHospital(HospitalViewModel viewModel)
         {
-            var model = new HospitalViewModel().ConvertViewModel(hospital);
-            _unitOfWork.GenericRepository<Hospital>().Add(model);
+            _unitOfWork.GenericRepository<Hospital>().Add(new HospitalViewModel().ConvertViewModel(viewModel));
             _unitOfWork.Save();
         }
 
-        public void UpdateHospital(HospitalViewModel hospital)
+        /// <summary>Update Hospital</summary>
+        /// <param name="viewModel">Hospital View Model</param>
+        public void UpdateHospital(HospitalViewModel viewModel)
         {
-            var model = new HospitalViewModel().ConvertViewModel(hospital);
+            var model = new HospitalViewModel().ConvertViewModel(viewModel);
             var modelById = _unitOfWork.GenericRepository<Hospital>().GetById(model.Id);
-            modelById.Name = hospital.Name;
-            modelById.City = hospital.City;
-            modelById.PinCode = hospital.PinCode;
-            modelById.Country = hospital.Country;
+            modelById.Name = viewModel.Name;
+            modelById.City = viewModel.City;
+            modelById.PinCode = viewModel.PinCode;
+            modelById.Country = viewModel.Country;
             _unitOfWork.GenericRepository<Hospital>().Update(modelById);
             _unitOfWork.Save();
         }
 
+        /// <summary>Delete Hospital</summary>
+        /// <param name="id">Hospital Identifier</param>
         public void DeleteHospital(int id)
         {
-            var model = _unitOfWork.GenericRepository<Hospital>().GetById(id);
-            _unitOfWork.GenericRepository<Hospital>().Delete(model);
+            _unitOfWork.GenericRepository<Hospital>().Delete(_unitOfWork.GenericRepository<Hospital>().GetById(id));
             _unitOfWork.Save();
         }
 
-        private List<HospitalViewModel> ConvertModelToViewModelList(List<Hospital> modelList) 
+        /// <summary>Convert Model to View Model Collection</summary>
+        /// <param name="hospitalCollection">Hospital Model Collection</param>
+        /// <returns>List<HospitalViewModel></returns>
+        private List<HospitalViewModel> GetHospitalViewModelCollection(List<Hospital> hospitalCollection) 
         {
-            return modelList.Select(x => new HospitalViewModel(x)).ToList();
+            return hospitalCollection.Select(x => new HospitalViewModel(x)).ToList();
         }
     }
 }
