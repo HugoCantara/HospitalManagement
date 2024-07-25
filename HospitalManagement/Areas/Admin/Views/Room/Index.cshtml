@@ -4,19 +4,20 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>@ViewTitleConstants.ROOM_INDEX</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">@ButtonNameConstants.CREATE_NEW</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>HospitalId</th>
-            <th>RoomNumber</th>
-            <th>Type</th>
-            <th>Status</th>
+            <th>@GridviewColumnsConstants.ROOM_ID</th>
+            <th>@GridviewColumnsConstants.HOSPITAL_ID</th>
+            <th>@GridviewColumnsConstants.ROOM_NUMBER</th>
+            <th>@GridviewColumnsConstants.ROOM_TYPE</th>
+            <th>@GridviewColumnsConstants.ROOM_STATUS</th>
             <th></th>
         </tr>
     </thead>
@@ -39,9 +40,9 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.Id  }) |
-                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                @Html.ActionLink(ButtonNameConstants.EDIT, ActionNameConstants.EDIT, new {  id=item.Id  }) |
+                @Html.ActionLink(ButtonNameConstants.DETAILS, ActionNameConstants.DETAILS, new { id=item.Id }) |
+                @Html.ActionLink(ButtonNameConstants.DELETE, ActionNameConstants.DELETE, new { id=item.Id })
             </td>
         </tr>
 }
