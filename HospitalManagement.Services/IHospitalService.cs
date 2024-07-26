@@ -8,6 +8,10 @@ namespace HospitalManagement.Services
     public interface IHospitalService
     {
         /// <summary>Get All Hospital</summary>
+        /// <returns>List<HospitalViewModel></returns>
+        List<HospitalViewModel> GetAll();
+
+        /// <summary>Get All Hospital</summary>
         /// <param name="pageNumber">Page Number</param>
         /// <param name="pageSize">Page Size</param>
         /// <returns>PagedResult<HospitalViewModel></returns>

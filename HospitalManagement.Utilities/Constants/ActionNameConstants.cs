@@ -7,5 +7,6 @@ namespace HospitalManagement.Utilities.Constants
         public const string DETAILS = "Details";
         public const string EDIT = "Edit";
         public const string DELETE = "Delete";
+        public const string INDEX_ACTION = "Index";
     }
 }

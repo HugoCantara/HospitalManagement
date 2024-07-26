@@ -14,7 +14,7 @@
     <thead>
         <tr>
             <th>@GridviewColumnsConstants.ROOM_ID</th>
-            <th>@GridviewColumnsConstants.HOSPITAL_ID</th>
+            <th>@GridviewColumnsConstants.HOSPITAL_NAME</th>
             <th>@GridviewColumnsConstants.ROOM_NUMBER</th>
             <th>@GridviewColumnsConstants.ROOM_TYPE</th>
             <th>@GridviewColumnsConstants.ROOM_STATUS</th>
@@ -28,7 +28,7 @@
                 @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.HospitalId)
+                @Html.DisplayFor(modelItem => item.Hospital.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.RoomNumber)

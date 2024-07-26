@@ -6,7 +6,7 @@ namespace HospitalManagement.Utilities.Constants
     {
         /* HOSPITAL */
         public const string HOSPITAL_ID = "HOSPITAL ID";
-        public const string HOSPITAL_NAME = "NAME";
+        public const string HOSPITAL_NAME = "HOSPITAL NAME";
         public const string HOSPITAL_TYPE = "TYPE";
         public const string HOSPITAL_CITY = "CITY";
         public const string HOSPITAL_PIN_CODE = "PIN CODE";

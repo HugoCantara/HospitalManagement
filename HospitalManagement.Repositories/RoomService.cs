@@ -31,7 +31,7 @@ namespace HospitalManagement.Repositories
             try
             {
                 int records = (pageSize * pageNumber) - pageSize;
-                var modelList = _unitOfWork.GenericRepository<Room>().GetAll().Skip(records).Take(pageSize).ToList();
+                var modelList = _unitOfWork.GenericRepository<Room>().GetAll(includeProperties:"Hospital").Skip(records).Take(pageSize).ToList();
                 totalRecords = _unitOfWork.GenericRepository<Room>().GetAll().ToList().Count;
                 roomViewModelCollection = GetRoomViewModelCollection(modelList);
             }

@@ -2,8 +2,10 @@
 namespace HospitalManagement.Web.Areas.Admin.Controllers
 {
     using HospitalManagement.Services;
+    using HospitalManagement.Utilities.Constants;
     using HospitalManagement.ViewModels;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
 
     /// <summary>Contact Controller</summary>
     [Area("admin")]
@@ -12,14 +14,16 @@ namespace HospitalManagement.Web.Areas.Admin.Controllers
         /// <summary>Contact Service Interface</summary>
         private IContactService _contactService;
 
-        /// <summary>Index Action Name</summary>
-        private const string INDEX_ACTION = "Index";
+        /// <summary>Hospital Service Interface</summary>
+        private IHospitalService _hospitalService;
 
         /// <summary>Constructor</summary>
         /// <param name="contactService">Contact Service Interface</param>
-        public ContactController(IContactService contactService)
+        /// <param name="hospitalService">Hospital Service Interface</param>
+        public ContactController(IContactService contactService, IHospitalService hospitalService)
         {
             _contactService = contactService;
+            _hospitalService = hospitalService;
         }
 
         /// <summary>Index Action Result</summary>
@@ -36,6 +40,7 @@ namespace HospitalManagement.Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            //ViewBag.hospital = new SelectList(_hospitalService.GetAll(), "Id", "Name");
             return View();
         }
 
@@ -46,7 +51,7 @@ namespace HospitalManagement.Web.Areas.Admin.Controllers
         public IActionResult Create(ContactViewModel viewModel)
         {
             _contactService.InsertContact(viewModel);
-            return RedirectToAction(INDEX_ACTION);
+            return RedirectToAction(ActionNameConstants.INDEX_ACTION);
         }
 
         /// <summary>GET - Edit Action Result</summary>
@@ -55,6 +60,7 @@ namespace HospitalManagement.Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
+            //ViewBag.hospital = new SelectList(_hospitalService.GetAll(), "Id", "Name");
             return View(_contactService.GetContactById(id));
         }
 
@@ -65,7 +71,7 @@ namespace HospitalManagement.Web.Areas.Admin.Controllers
         public IActionResult Edit(ContactViewModel viewModel)
         {
             _contactService.UpdateContact(viewModel);
-            return RedirectToAction(INDEX_ACTION);
+            return RedirectToAction(ActionNameConstants.INDEX_ACTION);
         }
 
         /// <summary>Delete Action Result</summary>
@@ -74,7 +80,7 @@ namespace HospitalManagement.Web.Areas.Admin.Controllers
         public IActionResult Delete(int id)
         {
             _contactService.DeleteContact(id);
-            return RedirectToAction(INDEX_ACTION);
+            return RedirectToAction(ActionNameConstants.INDEX_ACTION);
         }
     }
 }

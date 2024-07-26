@@ -18,6 +18,8 @@ namespace HospitalManagement.ViewModels
         /// <summary>Contact Phone</summary>
         public string Phone { get; set; }
 
+        public Hospital Hospital { get; set; }
+
         /// <summary>Constructor</summary>
         public ContactViewModel() { }
 
@@ -29,6 +31,7 @@ namespace HospitalManagement.ViewModels
             HospitalId = model.HospitalId;
             Email = model.Email;
             Phone = model.Phone;
+            Hospital = model.Hospital;
         }
 
         /// <summary>Convert View Model to Model</summary>
@@ -41,7 +44,8 @@ namespace HospitalManagement.ViewModels
                 Id = viewModel.Id,
                 HospitalId = viewModel.HospitalId,
                 Email = viewModel.Email,
-                Phone = viewModel.Phone
+                Phone = viewModel.Phone,
+                Hospital = viewModel.Hospital
             };
         }
     }

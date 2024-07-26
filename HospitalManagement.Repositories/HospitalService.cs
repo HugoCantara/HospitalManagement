@@ -20,6 +20,26 @@ namespace HospitalManagement.Repositories
         }
 
         /// <summary>Get All Hospitals</summary>
+        /// <returns>List<HospitalViewModel></returns>
+        public List<HospitalViewModel> GetAll() 
+        {
+            var hospitalViewModelCollection = new List<HospitalViewModel>();
+           
+            try
+            {
+                
+                var modelCollection = _unitOfWork.GenericRepository<Hospital>().GetAll().ToList();
+                hospitalViewModelCollection = GetHospitalViewModelCollection(modelCollection);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return hospitalViewModelCollection;
+        }
+
+        /// <summary>Get All Hospitals</summary>
         /// <param name="pageNumber">Page Number</param>
         /// <param name="pageSize">Page Size</param>
         /// <returns>PagedResult<HospitalViewModel></returns>

@@ -21,6 +21,8 @@ namespace HospitalManagement.ViewModels
         /// <summary>Room Status</summary>
         public string Status { get; set; }
 
+        public Hospital Hospital { get; set; }
+
         /// <summary>Constructor</summary>
         public RoomViewModel() { }
 
@@ -33,6 +35,7 @@ namespace HospitalManagement.ViewModels
             RoomNumber = model.RoomNumber;
             Type = model.Type;
             Status = model.Status;
+            Hospital = model.Hospital;
         }
 
         /// <summary>Convert View Model to Model</summary>
@@ -46,7 +49,8 @@ namespace HospitalManagement.ViewModels
                 HospitalId = viewModel.HospitalId,
                 RoomNumber = viewModel.RoomNumber,
                 Type = viewModel.Type,
-                Status = viewModel.Status
+                Status = viewModel.Status,
+                Hospital = viewModel.Hospital
             };
         }
     }
