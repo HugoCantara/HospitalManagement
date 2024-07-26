@@ -1,7 +1,7 @@
 ﻿@page
 @using HospitalManagement.Models
 @using HospitalManagement.Models.Enumerations
-@model RegisterModel
+@model DoctorRegisterModel
 @{
     ViewData["Title"] = "Register";
 }
@@ -50,17 +50,22 @@
             </div>
 
             <div class="form-floating">
+                <input asp-for="Input.Specialist" class="form-control" aria-required="true" />
+                <label asp-for="Input.Specialist"></label>
+                <span asp-validation-for="Input.Specialist" class="text-danger"></span>
+            </div>
+
+            <div class="form-floating">
                 <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
                 <label asp-for="Input.Email"></label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
-            
+
             <div class="form-floating">
                 <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
                 <label asp-for="Input.Password"></label>
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
-            
             <div class="form-floating">
                 <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
                 <label asp-for="Input.ConfirmPassword"></label>
@@ -68,10 +73,23 @@
             </div>
 
             <div class="form-group">
-                <input asp-for="Input.PictureUrl" class="form-control" aria-required="true" />
-                <label asp-for="Input.PictureUrl"></label>
-                <span asp-validation-for="Input.PictureUrl" class="text-danger"></span>
+                <input asp-for="Input.PictureUri" class="form-control" aria-required="true" />
+                <label asp-for="Input.PictureUri"></label>
+                <span asp-validation-for="Input.PictureUri" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-2">
+                        <input type="checkbox" asp-for="Input.IsDoctor" class="form-check" aria-required="true" />
+                    </div>
+                    <div class="col-10">
+                        <label asp-for="Input.IsDoctor"></label>
+                    </div>
+                </div>
+                <span asp-validation-for="Input.IsDoctor" class="text-danger"></span>
+            </div>
+
 
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
