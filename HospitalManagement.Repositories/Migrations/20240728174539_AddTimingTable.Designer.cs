@@ -4,6 +4,7 @@ using HospitalManagement.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalManagement.Repositories.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240728174539_AddTimingTable")]
+    partial class AddTimingTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -508,45 +510,6 @@ namespace HospitalManagement.Repositories.Migrations
                     b.ToTable("TestPrices");
                 });
 
-            modelBuilder.Entity("HospitalManagement.Models.Timing", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AfternoonShiftEndTime")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AfternoonShiftStartTime")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DoctorIdId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MorningShiftEndTime")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MorningShiftStartTime")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorIdId");
-
-                    b.ToTable("DoctorTimings");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -934,15 +897,6 @@ namespace HospitalManagement.Repositories.Migrations
                     b.Navigation("Bill");
 
                     b.Navigation("Lab");
-                });
-
-            modelBuilder.Entity("HospitalManagement.Models.Timing", b =>
-                {
-                    b.HasOne("HospitalManagement.Models.ApplicationUser", "DoctorId")
-                        .WithMany()
-                        .HasForeignKey("DoctorIdId");
-
-                    b.Navigation("DoctorId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

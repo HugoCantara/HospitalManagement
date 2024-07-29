@@ -1,22 +1,28 @@
 ﻿/// <summary>Hospital Management - Version 1.0</summary>
 namespace HospitalManagement.Web.Areas.Admin.Controllers
 {
-    using HospitalManagement.Services;
+    using HospitalManagement.Repositories.Interfaces.Models;
     using Microsoft.AspNetCore.Mvc;
 
+    /// <summary>Users Controller</summary>
     [Area("admin")]
     public class UsersController : Controller
     {
-        private IApplicationUserService _applicationUserService;
+        private IUserRepository _userRepository;
 
-        public UsersController(IApplicationUserService applicationUserService)
+        public UsersController(IUserRepository userRepository)
         {
-            _applicationUserService = applicationUserService;
+            _userRepository = userRepository;
         }
 
         public IActionResult Index(int pageNumber = 1, int pageSize = 10)
         {
-            return View(_applicationUserService.GetAll(pageNumber, pageSize));
+            return View(_userRepository.GetAll(pageNumber, pageSize));
+        }
+
+        public IActionResult IndexAllDoctors(int pageNumber = 1, int pageSize = 10)
+        {
+            return View(_userRepository.GetAllDoctors(pageNumber, pageSize));
         }
     }
 }

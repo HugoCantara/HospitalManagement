@@ -38,10 +38,16 @@
                             <a class="nav-link text-dark" asp-area="admin" asp-controller="Users" asp-action="Index">Users</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="admin" asp-controller="Users" asp-action="IndexAllDoctors">All Doctors</a>
+                        </li>
+                        <li class="nav-item">
                             <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/DoctorRegister">Doctor</a>
                         </li>
                         <li class="nav-item">
                             <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Patient</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="DoctorTiming" asp-controller="Doctor" asp-action="Index">Doctor Timing</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />

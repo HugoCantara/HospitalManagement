@@ -1,7 +1,7 @@
 ﻿/// <summary>Hospital Management - Version 1.0</summary>
 namespace HospitalManagement.Web.Areas.Admin.Controllers
 {
-    using HospitalManagement.Services;
+    using HospitalManagement.Repositories.Interfaces.Models;
     using HospitalManagement.ViewModels;
     using Microsoft.AspNetCore.Mvc;
 
@@ -10,16 +10,16 @@ namespace HospitalManagement.Web.Areas.Admin.Controllers
     public class RoomController : Controller
     {
         /// <summary>Room Service Interface</summary>
-        private IRoomService _roomService;
+        private IRoomRepository _roomRepository;
 
         /// <summary>Index Action Name</summary>
         private const string INDEX_ACTION = "Index";
 
         /// <summary>Constructor</summary>
         /// <param name="roomService">Room Service Interface</param>
-        public RoomController(IRoomService roomService)
+        public RoomController(IRoomRepository roomRepository)
         {
-            _roomService = roomService;
+            _roomRepository = roomRepository;
         }
 
         /// <summary>Index Action Result</summary>
@@ -28,7 +28,7 @@ namespace HospitalManagement.Web.Areas.Admin.Controllers
         /// <returns>IActionResult</returns>
         public IActionResult Index(int pageNumber = 1, int pageSize = 10)
         {
-            return View(_roomService.GetAll(pageNumber, pageSize));
+            return View(_roomRepository.GetAllWithPagination(pageNumber, pageSize));
         }
 
         /// <summary>GET - Create Action Result</summary>
@@ -45,7 +45,7 @@ namespace HospitalManagement.Web.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(RoomViewModel viewModel)
         {
-            _roomService.InsertRoom(viewModel);
+            _roomRepository.InsertRoom(viewModel);
             return RedirectToAction(INDEX_ACTION);
         }
 
@@ -55,7 +55,7 @@ namespace HospitalManagement.Web.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            return View(_roomService.GetRoomById(id));
+            return View(_roomRepository.GetRoomById(id));
         }
 
         /// <summary>POST - Edit Action Result</summary>
@@ -64,7 +64,7 @@ namespace HospitalManagement.Web.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Edit(RoomViewModel viewModel)
         {
-            _roomService.UpdateRoom(viewModel);
+            _roomRepository.UpdateRoom(viewModel);
             return RedirectToAction(INDEX_ACTION);
         }
 
@@ -73,7 +73,7 @@ namespace HospitalManagement.Web.Areas.Admin.Controllers
         /// <returns>IActionResult</returns>
         public IActionResult Delete(int id)
         {
-            _roomService.DeleteRoom(id);
+            _roomRepository.DeleteRoom(id);
             return RedirectToAction(INDEX_ACTION);
         }
     }

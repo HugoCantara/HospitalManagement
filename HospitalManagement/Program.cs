@@ -1,11 +1,12 @@
-using HospitalManagement.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using HospitalManagement.Utilities;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using HospitalManagement.Repositories;
 using HospitalManagement.Repositories.Interfaces;
 using HospitalManagement.Repositories.Implementation;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using HospitalManagement.Services;
+using HospitalManagement.Repositories.Interfaces.Models;
+using HospitalManagement.Repositories.Repositories.Models;
+using HospitalManagement.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,10 +20,11 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkSto
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
-builder.Services.AddTransient<IApplicationUserService, ApplicationUserService>();
-builder.Services.AddTransient<IHospitalService, HospitalService>();
-builder.Services.AddTransient<IRoomService, RoomService>();
-builder.Services.AddTransient<IContactService, ContactService>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IHospitalRepository, HospitalRepository>();
+builder.Services.AddTransient<IRoomRepository, RoomRepository>();
+builder.Services.AddTransient<IContactRepository, ContactRepository>();
+builder.Services.AddTransient<IDoctorRepository, DoctorRepository>();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
